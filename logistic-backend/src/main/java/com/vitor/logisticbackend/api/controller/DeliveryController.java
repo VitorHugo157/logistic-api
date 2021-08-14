@@ -1,7 +1,7 @@
-package com.vitor.logisticbackend.controller;
+package com.vitor.logisticbackend.api.controller;
 
-import com.vitor.logisticbackend.model.Delivery;
-import com.vitor.logisticbackend.service.DeliveryService;
+import com.vitor.logisticbackend.domain.model.Delivery;
+import com.vitor.logisticbackend.domain.service.DeliveryService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,5 +31,11 @@ public class DeliveryController {
     @GetMapping("/{id}")
     public Delivery findById(@PathVariable Long id) {
         return deliveryService.findById(id);
+    }
+
+    @PutMapping("/{id}/finishing")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void finish(@PathVariable Long id) {
+        deliveryService.finishDelivery(id);
     }
 }

@@ -1,4 +1,4 @@
-package com.vitor.logisticbackend.dto;
+package com.vitor.logisticbackend.api.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;

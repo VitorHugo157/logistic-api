@@ -1,6 +1,7 @@
-package com.vitor.logisticbackend.exceptionHandler;
+package com.vitor.logisticbackend.api.exceptionHandler;
 
-import com.vitor.logisticbackend.exception.BusinessException;
+import com.vitor.logisticbackend.domain.exception.BusinessException;
+import com.vitor.logisticbackend.domain.exception.ResourceNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         problem.setFields(fields);
 
         return super.handleExceptionInternal(ex, problem, headers, status, request);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Object> handleResourceNotFound(ResourceNotFoundException ex, WebRequest req) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
+
+        Problem problem = new Problem();
+        problem.setStatus(status.value());
+        problem.setDateTime(OffsetDateTime.now());
+        problem.setTitle(ex.getMessage());
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, req);
     }
 
     @ExceptionHandler(BusinessException.class)

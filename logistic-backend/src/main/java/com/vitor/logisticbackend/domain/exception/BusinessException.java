@@ -1,4 +1,4 @@
-package com.vitor.logisticbackend.exception;
+package com.vitor.logisticbackend.domain.exception;
 
 public class BusinessException extends RuntimeException {
 

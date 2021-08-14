@@ -1,4 +1,4 @@
-package com.vitor.logisticbackend.model;
+package com.vitor.logisticbackend.domain.model;
 
 public enum DeliveryStatus {
 

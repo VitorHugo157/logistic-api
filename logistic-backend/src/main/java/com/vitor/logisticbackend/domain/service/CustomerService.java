@@ -1,12 +1,15 @@
-package com.vitor.logisticbackend.service;
+package com.vitor.logisticbackend.domain.service;
 
-import com.vitor.logisticbackend.exception.BusinessException;
-import com.vitor.logisticbackend.model.Customer;
-import com.vitor.logisticbackend.repository.CustomerRepository;
+import com.vitor.logisticbackend.domain.exception.BusinessException;
+import com.vitor.logisticbackend.domain.exception.ResourceNotFoundException;
+import com.vitor.logisticbackend.domain.model.Customer;
+import com.vitor.logisticbackend.domain.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,10 +18,29 @@ public class CustomerService {
 
     private CustomerRepository customerRepository;
 
+    @Transactional
     public Customer createCustomer(Customer customer) {
-
         verifyIfIsAlreadyRegistered(customer.getEmail());
         return customerRepository.save(customer);
+    }
+
+    public List<Customer> listCustomers() {
+        return customerRepository.findAll();
+    }
+
+    public Customer findById(Long id) {
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer with id " + id + "not found"));
+    }
+
+//    public Customer updateById(Long id) {
+//
+//    }
+
+    @Transactional
+    public void deleteById(Long id) {
+        verifyIfCustomerExists(id);
+        customerRepository.deleteById(id);
     }
 
     public Customer verifyIfCustomerExists(Long id) {

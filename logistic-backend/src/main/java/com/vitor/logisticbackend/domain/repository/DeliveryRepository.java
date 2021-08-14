@@ -1,6 +1,6 @@
-package com.vitor.logisticbackend.repository;
+package com.vitor.logisticbackend.domain.repository;
 
-import com.vitor.logisticbackend.model.Delivery;
+import com.vitor.logisticbackend.domain.model.Delivery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

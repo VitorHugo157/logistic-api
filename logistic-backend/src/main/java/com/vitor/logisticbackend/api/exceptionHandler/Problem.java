@@ -1,4 +1,4 @@
-package com.vitor.logisticbackend.exceptionHandler;
+package com.vitor.logisticbackend.api.exceptionHandler;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

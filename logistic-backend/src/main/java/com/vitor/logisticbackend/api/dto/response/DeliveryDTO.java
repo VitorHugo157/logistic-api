@@ -1,6 +1,6 @@
-package com.vitor.logisticbackend.dto;
+package com.vitor.logisticbackend.api.dto.response;
 
-import com.vitor.logisticbackend.model.DeliveryStatus;
+import com.vitor.logisticbackend.domain.model.DeliveryStatus;
 import lombok.Getter;
 import lombok.Setter;
 
