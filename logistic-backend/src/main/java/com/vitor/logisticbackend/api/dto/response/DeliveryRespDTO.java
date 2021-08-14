@@ -1,22 +1,25 @@
 package com.vitor.logisticbackend.api.dto.response;
 
 import com.vitor.logisticbackend.domain.model.DeliveryStatus;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
-@Getter
-@Setter
-public class DeliveryDTO {
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class DeliveryRespDTO {
 
     private Long id;
-    private String customerName;
-    private RecipientDTO recipient;
+    private CustomerRespDTO customer;
+    private RecipientRespDTO recipient;
     private BigDecimal rate;
     private DeliveryStatus status;
     private OffsetDateTime orderDate;
     private OffsetDateTime deliveryDate;
-
 }

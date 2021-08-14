@@ -1,5 +1,8 @@
 package com.vitor.logisticbackend.domain.service;
 
+import com.vitor.logisticbackend.api.dto.request.DeliveryReqDTO;
+import com.vitor.logisticbackend.api.dto.response.DeliveryRespDTO;
+import com.vitor.logisticbackend.api.mapper.DeliveryMapper;
 import com.vitor.logisticbackend.domain.exception.BusinessException;
 import com.vitor.logisticbackend.domain.model.Customer;
 import com.vitor.logisticbackend.domain.model.Delivery;
@@ -20,15 +23,17 @@ public class DeliveryService {
 
     private CustomerService customerService;
     private DeliveryRepository deliveryRepository;
+    private final DeliveryMapper deliveryMapper = DeliveryMapper.INSTANCE;
 
-    public Delivery requestDelivery(Delivery delivery) {
+    public DeliveryRespDTO requestDelivery(DeliveryReqDTO deliveryReq) {
 
-        Customer customer = customerService.verifyIfCustomerExists(delivery.getCustomer().getId());
-
+        Customer customer = customerService.verifyIfCustomerExists(deliveryReq.getCustomer().getId());
+        Delivery delivery = deliveryMapper.toModel(deliveryReq);
         delivery.setCustomer(customer);
         delivery.setStatus(DeliveryStatus.PENDENTE);
         delivery.setOrderDate(OffsetDateTime.now());
-        return deliveryRepository.save(delivery);
+        Delivery deliverySaved = deliveryRepository.save(delivery);
+        return deliveryMapper.toDTO(deliverySaved);
     }
 
     public List<Delivery> listDeliveries() {

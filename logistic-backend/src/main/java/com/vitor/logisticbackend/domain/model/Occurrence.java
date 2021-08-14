@@ -22,7 +22,7 @@ public class Occurrence {
     @ManyToOne
     private Delivery delivery;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String description;
 
     @Column(nullable = false)

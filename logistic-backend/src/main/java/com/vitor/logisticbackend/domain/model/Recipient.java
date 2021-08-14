@@ -4,34 +4,23 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Data
 @Embeddable
 public class Recipient {
 
-    @NotBlank
-    @Size(max = 100)
-    @Column(name = "recipient_name", nullable = false)
+    @Column(name = "recipient_name", nullable = false, length = 100)
     private String name;
 
-    @NotBlank
-    @Size(max = 100)
-    @Column(name = "recipient_address", nullable = false)
+    @Column(name = "recipient_address", nullable = false, length = 100)
     private String address;
 
-    @NotBlank
-    @Size(max = 10)
-    @Column(name = "recipient_address_number", nullable = false)
+    @Column(name = "recipient_address_number", nullable = false, length = 10)
     private String addressNumber;
 
-    @Size(max = 30)
-    @Column(name = "recipient_complement")
+    @Column(name = "recipient_complement", length = 30)
     private String complement;
 
-    @NotBlank
-    @Size(max = 60)
-    @Column(name = "recipient_district", nullable = false)
+    @Column(name = "recipient_district", nullable = false, length = 60)
     private String district;
 }

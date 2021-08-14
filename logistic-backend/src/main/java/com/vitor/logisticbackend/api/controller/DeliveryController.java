@@ -1,5 +1,7 @@
 package com.vitor.logisticbackend.api.controller;
 
+import com.vitor.logisticbackend.api.dto.request.DeliveryReqDTO;
+import com.vitor.logisticbackend.api.dto.response.DeliveryRespDTO;
 import com.vitor.logisticbackend.domain.model.Delivery;
 import com.vitor.logisticbackend.domain.service.DeliveryService;
 import lombok.AllArgsConstructor;
@@ -19,7 +21,7 @@ public class DeliveryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Delivery request(@Valid @RequestBody Delivery delivery) {
+    public DeliveryRespDTO request(@Valid @RequestBody DeliveryReqDTO delivery) {
         return deliveryService.requestDelivery(delivery);
     }
 
