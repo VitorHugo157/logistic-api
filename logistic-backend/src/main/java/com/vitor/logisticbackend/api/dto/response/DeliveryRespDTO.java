@@ -16,7 +16,7 @@ import java.time.OffsetDateTime;
 public class DeliveryRespDTO {
 
     private Long id;
-    private CustomerRespDTO customer;
+    private CustomerDeliveryRespDTO customer;
     private RecipientRespDTO recipient;
     private BigDecimal rate;
     private DeliveryStatus status;

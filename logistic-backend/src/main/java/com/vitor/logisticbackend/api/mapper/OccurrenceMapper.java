@@ -12,6 +12,6 @@ public interface OccurrenceMapper {
 
     OccurrenceMapper INSTANCE = Mappers.getMapper(OccurrenceMapper.class);
 
-    public OccurrenceRespDTO toDTO(Occurrence occurrence);
-    public List<OccurrenceRespDTO> toList(List<Occurrence> occurrences);
+    OccurrenceRespDTO toDTO(Occurrence occurrence);
+    List<OccurrenceRespDTO> toList(List<Occurrence> occurrences);
 }

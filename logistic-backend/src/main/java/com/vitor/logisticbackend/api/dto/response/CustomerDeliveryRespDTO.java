@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerRespDTO {
+public class CustomerDeliveryRespDTO {
 
     private Long id;
     private String name;
-    private String email;
-    private String phoneNumber;
 }

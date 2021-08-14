@@ -1,5 +1,7 @@
 package com.vitor.logisticbackend.api.controller;
 
+import com.vitor.logisticbackend.api.dto.request.CustomerReqDTO;
+import com.vitor.logisticbackend.api.dto.response.CustomerRespDTO;
 import com.vitor.logisticbackend.domain.model.Customer;
 import com.vitor.logisticbackend.domain.service.CustomerService;
 import lombok.AllArgsConstructor;
@@ -19,23 +21,28 @@ public class CustomerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Customer create(@Valid @RequestBody Customer customer) {
+    public CustomerRespDTO create(@Valid @RequestBody CustomerReqDTO customer) {
         return customerService.createCustomer(customer);
     }
 
     @GetMapping
-    public List<Customer> listCustomers() {
+    public List<CustomerRespDTO> listCustomers() {
         return customerService.listCustomers();
     }
 
     @GetMapping("/{id}")
-    public Customer findById(@PathVariable Long id) {
+    public CustomerRespDTO findById(@PathVariable Long id) {
         return customerService.findById(id);
     }
 
     @PutMapping("/{id}")
-    public Customer updateById(@PathVariable Long id, @Valid @RequestBody Customer customer) {
-//        return customerService.updateById(id, customer);
-        return null;
+    public CustomerRespDTO updateById(@PathVariable Long id, @Valid @RequestBody CustomerReqDTO customer) {
+        return customerService.updateById(id, customer);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) {
+        customerService.deleteById(id);
     }
 }

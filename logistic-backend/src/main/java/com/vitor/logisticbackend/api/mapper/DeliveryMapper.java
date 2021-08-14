@@ -13,7 +13,7 @@ public interface DeliveryMapper {
 
     DeliveryMapper INSTANCE = Mappers.getMapper(DeliveryMapper.class);
 
-    public Delivery toModel(DeliveryReqDTO deliveryReqDTO);
-    public DeliveryRespDTO toDTO(Delivery delivery);
-    public List<DeliveryRespDTO> toList(List<Delivery> deliveries);
+    Delivery toModel(DeliveryReqDTO deliveryReqDTO);
+    DeliveryRespDTO toDTO(Delivery delivery);
+    List<DeliveryRespDTO> toList(List<Delivery> deliveries);
 }
