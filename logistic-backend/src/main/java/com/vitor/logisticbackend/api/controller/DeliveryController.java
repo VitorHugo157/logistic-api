@@ -1,8 +1,10 @@
 package com.vitor.logisticbackend.api.controller;
 
 import com.vitor.logisticbackend.api.dto.request.DeliveryReqDTO;
+import com.vitor.logisticbackend.api.dto.request.OccurrenceReqDTO;
 import com.vitor.logisticbackend.api.dto.response.DeliveryRespDTO;
-import com.vitor.logisticbackend.domain.model.Delivery;
+import com.vitor.logisticbackend.api.dto.response.OccurrenceRespDTO;
+import com.vitor.logisticbackend.domain.model.Occurrence;
 import com.vitor.logisticbackend.domain.service.DeliveryService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +28,12 @@ public class DeliveryController {
     }
 
     @GetMapping
-    public List<Delivery> listDeliveries() {
+    public List<DeliveryRespDTO> listDeliveries() {
         return deliveryService.listDeliveries();
     }
 
     @GetMapping("/{id}")
-    public Delivery findById(@PathVariable Long id) {
+    public DeliveryRespDTO findById(@PathVariable Long id) {
         return deliveryService.findById(id);
     }
 
@@ -39,5 +41,16 @@ public class DeliveryController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void finish(@PathVariable Long id) {
         deliveryService.finishDelivery(id);
+    }
+
+    @PostMapping("/{deliveryId}/occurrences")
+    @ResponseStatus(HttpStatus.CREATED)
+    public OccurrenceRespDTO registerOccurrence(@PathVariable Long deliveryId, @Valid @RequestBody OccurrenceReqDTO occurrenceReqDTO) {
+        return deliveryService.registerOccurrence(deliveryId, occurrenceReqDTO.getDescription());
+    }
+
+    @GetMapping("/{deliveryId}/occurrences")
+    public List<OccurrenceRespDTO> listOccurrences(@PathVariable Long deliveryId) {
+        return deliveryService.listOccurrencesByDeliveryId(deliveryId);
     }
 }

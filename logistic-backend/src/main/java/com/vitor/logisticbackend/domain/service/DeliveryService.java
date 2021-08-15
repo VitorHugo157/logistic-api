@@ -2,7 +2,9 @@ package com.vitor.logisticbackend.domain.service;
 
 import com.vitor.logisticbackend.api.dto.request.DeliveryReqDTO;
 import com.vitor.logisticbackend.api.dto.response.DeliveryRespDTO;
+import com.vitor.logisticbackend.api.dto.response.OccurrenceRespDTO;
 import com.vitor.logisticbackend.api.mapper.DeliveryMapper;
+import com.vitor.logisticbackend.api.mapper.OccurrenceMapper;
 import com.vitor.logisticbackend.domain.exception.BusinessException;
 import com.vitor.logisticbackend.domain.model.Customer;
 import com.vitor.logisticbackend.domain.model.Delivery;
@@ -24,6 +26,7 @@ public class DeliveryService {
     private CustomerService customerService;
     private DeliveryRepository deliveryRepository;
     private final DeliveryMapper deliveryMapper = DeliveryMapper.INSTANCE;
+    private final OccurrenceMapper occurrenceMapper = OccurrenceMapper.INSTANCE;
 
     public DeliveryRespDTO requestDelivery(DeliveryReqDTO deliveryReq) {
 
@@ -36,12 +39,14 @@ public class DeliveryService {
         return deliveryMapper.toDTO(deliverySaved);
     }
 
-    public List<Delivery> listDeliveries() {
-        return deliveryRepository.findAll();
+    public List<DeliveryRespDTO> listDeliveries() {
+        List<Delivery> deliveries = deliveryRepository.findAll();
+        return deliveryMapper.toList(deliveries);
     }
 
-    public Delivery findById(Long id) {
-        return verifyIfDeliveryExists(id);
+    public DeliveryRespDTO findById(Long id) {
+        Delivery deliveryFound = verifyIfDeliveryExists(id);
+        return deliveryMapper.toDTO(deliveryFound);
     }
 
     @Transactional
@@ -52,9 +57,15 @@ public class DeliveryService {
     }
 
     @Transactional
-    public Occurrence registerOccurrence(Long deliveryId, String description) {
+    public OccurrenceRespDTO registerOccurrence(Long deliveryId, String description) {
         Delivery delivery = verifyIfDeliveryExists(deliveryId);
-        return delivery.addOccurrence(description);
+        Occurrence occurrenceRegistered = delivery.addOccurrence(description);
+        return occurrenceMapper.toDTO(occurrenceRegistered);
+    }
+
+    public List<OccurrenceRespDTO> listOccurrencesByDeliveryId(Long deliveryId) {
+        Delivery delivery = verifyIfDeliveryExists(deliveryId);
+        return occurrenceMapper.toList(delivery.getOccurrences());
     }
 
     private Delivery verifyIfDeliveryExists(Long id) {

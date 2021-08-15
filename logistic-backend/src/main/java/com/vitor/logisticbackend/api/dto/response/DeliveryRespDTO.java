@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -22,4 +23,5 @@ public class DeliveryRespDTO {
     private DeliveryStatus status;
     private OffsetDateTime orderDate;
     private OffsetDateTime deliveryDate;
+    private List<OccurrenceRespDTO> occurrences;
 }

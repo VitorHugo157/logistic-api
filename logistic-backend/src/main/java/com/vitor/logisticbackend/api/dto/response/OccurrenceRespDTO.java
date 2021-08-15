@@ -15,5 +15,5 @@ public class OccurrenceRespDTO {
 
     private Long id;
     private String description;
-    private OffsetDateTime registerDate;
+    private OffsetDateTime registrationDate;
 }
