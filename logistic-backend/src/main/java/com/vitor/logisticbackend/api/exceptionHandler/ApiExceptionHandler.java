@@ -45,24 +45,22 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Object> handleResourceNotFound(ResourceNotFoundException ex, WebRequest req) {
         HttpStatus status = HttpStatus.NOT_FOUND;
-
-        Problem problem = new Problem();
-        problem.setStatus(status.value());
-        problem.setDateTime(OffsetDateTime.now());
-        problem.setTitle(ex.getMessage());
-
+        Problem problem = createErrorInstance(ex, req, status);
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, req);
     }
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Object> handleCustomerAlreadyRegistered(BusinessException ex, WebRequest req) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
-
-        Problem problem = new Problem();
-        problem.setStatus(status.value());
-        problem.setDateTime(OffsetDateTime.now());
-        problem.setTitle(ex.getLocalizedMessage());
-
+        Problem problem = createErrorInstance(ex, req, status);
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, req);
+    }
+
+    private Problem createErrorInstance(RuntimeException e, WebRequest req, HttpStatus status) {
+        return Problem.builder()
+                .status(status.value())
+                .dateTime(OffsetDateTime.now())
+                .title(e.getMessage())
+                .build();
     }
 }
