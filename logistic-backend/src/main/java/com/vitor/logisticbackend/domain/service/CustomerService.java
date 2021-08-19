@@ -7,20 +7,18 @@ import com.vitor.logisticbackend.domain.exception.BusinessException;
 import com.vitor.logisticbackend.domain.exception.ResourceNotFoundException;
 import com.vitor.logisticbackend.domain.model.Customer;
 import com.vitor.logisticbackend.domain.repository.CustomerRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class CustomerService {
 
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper = CustomerMapper.INSTANCE;
 
     @Transactional

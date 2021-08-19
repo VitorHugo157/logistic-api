@@ -11,8 +11,7 @@ import com.vitor.logisticbackend.domain.model.Delivery;
 import com.vitor.logisticbackend.domain.model.DeliveryStatus;
 import com.vitor.logisticbackend.domain.model.Occurrence;
 import com.vitor.logisticbackend.domain.repository.DeliveryRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,14 +19,15 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class DeliveryService {
 
-    private CustomerService customerService;
-    private DeliveryRepository deliveryRepository;
+    private final CustomerService customerService;
+    private final DeliveryRepository deliveryRepository;
     private final DeliveryMapper deliveryMapper = DeliveryMapper.INSTANCE;
     private final OccurrenceMapper occurrenceMapper = OccurrenceMapper.INSTANCE;
 
+    @Transactional
     public DeliveryRespDTO requestDelivery(DeliveryReqDTO deliveryReq) {
 
         Customer customer = customerService.verifyIfCustomerExists(deliveryReq.getCustomer().getId());

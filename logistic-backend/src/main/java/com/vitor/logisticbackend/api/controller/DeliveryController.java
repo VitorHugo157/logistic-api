@@ -4,10 +4,8 @@ import com.vitor.logisticbackend.api.dto.request.DeliveryReqDTO;
 import com.vitor.logisticbackend.api.dto.request.OccurrenceReqDTO;
 import com.vitor.logisticbackend.api.dto.response.DeliveryRespDTO;
 import com.vitor.logisticbackend.api.dto.response.OccurrenceRespDTO;
-import com.vitor.logisticbackend.domain.model.Occurrence;
 import com.vitor.logisticbackend.domain.service.DeliveryService;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/deliveries")
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class DeliveryController {
 
-    private DeliveryService deliveryService;
+    private final DeliveryService deliveryService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

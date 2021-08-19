@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -17,7 +17,7 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
@@ -42,25 +42,25 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return super.handleExceptionInternal(ex, problem, headers, status, request);
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<Object> handleResourceNotFound(ResourceNotFoundException ex, WebRequest req) {
-        HttpStatus status = HttpStatus.NOT_FOUND;
-        Problem problem = createErrorInstance(ex, req, status);
-        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, req);
-    }
-
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Object> handleCustomerAlreadyRegistered(BusinessException ex, WebRequest req) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
-        Problem problem = createErrorInstance(ex, req, status);
+        Problem problem = createErrorInstance(ex, status);
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, req);
     }
 
-    private Problem createErrorInstance(RuntimeException e, WebRequest req, HttpStatus status) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Object> handleResourceNotFound(ResourceNotFoundException ex, WebRequest req) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        Problem problem = createErrorInstance(ex, status);
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, req);
+    }
+
+    private Problem createErrorInstance(RuntimeException ex, HttpStatus status) {
         return Problem.builder()
                 .status(status.value())
                 .dateTime(OffsetDateTime.now())
-                .title(e.getMessage())
+                .title(ex.getMessage())
                 .build();
     }
 }

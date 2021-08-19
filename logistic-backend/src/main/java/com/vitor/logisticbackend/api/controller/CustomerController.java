@@ -2,10 +2,8 @@ package com.vitor.logisticbackend.api.controller;
 
 import com.vitor.logisticbackend.api.dto.request.CustomerReqDTO;
 import com.vitor.logisticbackend.api.dto.response.CustomerRespDTO;
-import com.vitor.logisticbackend.domain.model.Customer;
 import com.vitor.logisticbackend.domain.service.CustomerService;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/customers")
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class CustomerController {
 
-    private CustomerService customerService;
+    private final CustomerService customerService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
